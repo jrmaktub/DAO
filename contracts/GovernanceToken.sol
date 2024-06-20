@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/Extensions/ERC20Votes.sol";
 pragma solidity ^0.8.7;
 
 contract GovernanceToken is ERC20Votes {
-
     // events for the governance token
     event TokenTransfered(
         address indexed from,
@@ -14,7 +13,7 @@ contract GovernanceToken is ERC20Votes {
     );
 
     // Events
-    event TokenMinted(address indexed to, uint256 amount );
+    event TokenMinted(address indexed to, uint256 amount);
     event TokenBurned(address indexed from, uint256 amount);
 
     // max tokens per user
@@ -27,7 +26,10 @@ contract GovernanceToken is ERC20Votes {
     // Number of holders
     address[] public s_holders;
 
-    constructor(uint256 _keepPercentage) ERC20("MoralisToken", "MRST") ERC20Permit("MoralisToken") {
+    constructor(uint256 _keepPercentage)
+        ERC20("MoralisToken", "MRST")
+        ERC20Permit("MoralisToken")
+    {
         uint256 keepAmount = (TOTAL_SUPPLY * _keepPercentage) / 100;
         _mint(msg.sender, TOTAL_SUPPLY);
         _transfer(msg.sender, address(this), TOTAL_SUPPLY - keepAmount);
@@ -36,11 +38,10 @@ contract GovernanceToken is ERC20Votes {
 
     // Freely Claim Tokens
     function claimTokens() external {
-        require(!s_claimedTokens[msg.sender], "Already claimed Tokens");
+        require(!s_claimedTokens[msg.sender], "Already claimed tokens");
         s_claimedTokens[msg.sender] = true;
         _transfer(address(this), msg.sender, TOKENS_PER_USER * 10**18);
         s_holders.push(msg.sender);
-
     }
 
     function getHolderLength() external view returns (uint256) {
@@ -69,8 +70,6 @@ contract GovernanceToken is ERC20Votes {
         super._burn(account, amount);
         emit TokenBurned(account, amount);
     }
-
-
 }
 
 // Hot Proposal Coming up => Buy a ton of tokens and dump them after voting is over
