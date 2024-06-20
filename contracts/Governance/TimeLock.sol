@@ -14,7 +14,10 @@ contract TimeLock is TimelockController {
         address[] memory proposers,
         address[] memory executors,
         address admin
-    ) TimelockController(minDelay, proposers, executors, admin) {}
+    ) TimelockController(minDelay, proposers, executors, admin) {
+        
+    }
+
 }
 
 // The time lock is going to be the Owner of the Governed contract

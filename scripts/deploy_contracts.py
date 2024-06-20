@@ -28,7 +28,7 @@ ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 def deploy_contracts():
     account = get_account()
     governance_token = GovernanceToken.deploy(
-        2,
+        5,
         {"from": account},
         publish_source=config["networks"][network.show_active()].get("verify", False),
     )
@@ -45,6 +45,7 @@ def deploy_contracts():
     )
 
     print(f"Governance TimeLock: {governance_time_lock.address}")
+    
     governor = MoralisGovernor.deploy(
         governance_token.address,
         governance_time_lock.address,
